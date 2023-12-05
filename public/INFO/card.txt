@@ -1,0 +1,177 @@
+import Image from "next/image";
+
+const Card = () => {
+  return (
+    <div>
+      <div className="w-[450px] h-[512px] bg-white rounded-[30px] border-[2px] border-b-[5px] border-[#7666d8]">
+        <div className="flex justify-between items-center px-6 py-3 shadow-sm custom_shadow">
+          <div className="flex items-center">
+            <div>
+              <Image src="cardplay.svg" width={30} height={30} alt="play" />
+            </div>
+            <div className="ml-1 font-extrabold text-xl text-[#7836d3]">
+              LIVE
+            </div>
+          </div>
+
+          <div className="text-[#7836db] font-medium">#218486</div>
+        </div>
+        {/* bg-[#e9e6ef] h-2.5 dark:bg-[#e9e6ef] */}
+        <div className="w-full bg-[#e9e6ef] h-2.5 dark:bg-[#e9e6ef]">
+          <div className="bg-[#7836d3] h-2.5" style={{ width: "45%" }}></div>
+        </div>
+
+        <div className="flex flex-col justify-center items-center mt-6">
+          <div className="-mb-[2px]">
+            <Image
+              src="card_up_white.svg"
+              width={350}
+              height={580}
+              alt="image"
+            />
+          </div>
+          <div className="flex flex-col p-4 rounded-3xl border-[3.5px] border-[#ef449c] w-[400px] h-[215px] bg-white">
+            <div className="font-bold text-[#7b6ba7] mb-[15px]">LAST PRICE</div>
+            <div className="flex justify-between items-center mb-6">
+              <div className="font-bold text-3xl text-[#ef449c] underline_dotted">
+                $228.5332
+              </div>
+              <div className="flex justify-center items-center bg-[#ef449c] py-2 px-2 rounded-md gap-2">
+                <Image
+                  src="card_down_arrow.svg"
+                  width={30}
+                  height={30}
+                  alt="arrow"
+                />
+                <p className="text-white text-xl font-medium">$-0.4141</p>
+              </div>
+            </div>
+            <div className="flex justify-between items-center font-semibold text-lg text-[#4e459b] mb-1">
+              <div>Locked Price:</div>
+              <div>$228.9473</div>
+            </div>
+            <div className="flex justify-between items-center font-extrabold text-xl text-[#280D5F]">
+              <div>Prize Pool:</div>
+              <div>8.5143BNB</div>
+            </div>
+          </div>
+          <div className="-mt-[2px]">
+            <Image
+              src="card_down_pink.svg"
+              width={350}
+              height={580}
+              alt="image"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Card;
+
+
+
+
+
+
+import Image from "next/image";
+
+const Card = () => {
+  return (
+    <div>
+      <div
+        className={`w-[450px] h-[512px] bg-white rounded-[30px] border-[2px] border-b-[5px] border-[#7666d8]`}
+      >
+        <div
+          className={`flex justify-between items-center px-6 py-3 shadow-sm custom_shadow`}
+        >
+          <div className="flex items-center">
+            <div>
+              <Image src="cardplay.svg" width={30} height={30} alt="play" />
+            </div>
+            <div className={`ml-1 font-extrabold text-xl text-[#7836d3]`}>
+              LIVE
+            </div>
+          </div>
+
+          <div className={`text-[#7836db] font-medium`}>#218486</div>
+        </div>
+        {/* bg-[#e9e6ef] h-2.5 dark:bg-[#e9e6ef] */}
+        <div className={`w-full bg-[#e9e6ef] h-2.5 dark:bg-[#e9e6ef]`}>
+          <div className={`bg-[#7836d3] h-2.5`} style={{ width: "45%" }}></div>
+        </div>
+
+        <div className={`flex flex-col justify-center items-center mt-6`}>
+          <div className={`-mb-[2px]`}>
+            <Image
+              src="card_up_white.svg"
+              width={350}
+              height={580}
+              alt="image"
+            />
+          </div>
+          <div
+            className={`flex flex-col p-4 rounded-3xl border-[3.5px] border-[#ef449c] w-[400px] h-[215px] bg-white`}
+          >
+            <div className={`font-bold text-[#7b6ba7] mb-[15px]`}>
+              LAST PRICE
+            </div>
+            <div className={`flex justify-between items-center mb-6`}>
+              <div
+                className={`font-bold text-3xl text-[#ef449c] underline_dotted`}
+              >
+                $228.5332
+              </div>
+              <div
+                className={`flex justify-center items-center bg-[#ef449c] py-2 px-2 rounded-md gap-2`}
+              >
+                <Image
+                  src="card_down_arrow.svg"
+                  width={30}
+                  height={30}
+                  alt="arrow"
+                />
+                <p className={`text-white text-xl font-medium`}>$-0.4141</p>
+              </div>
+            </div>
+            <div
+              className={`flex justify-between items-center font-semibold text-lg text-[#4e459b] mb-1`}
+            >
+              <div>Locked Price:</div>
+              <div>$228.9473</div>
+            </div>
+            <div className="flex justify-between items-center font-extrabold text-xl text-[#280D5F]">
+              <div>Prize Pool:</div>
+              <div>8.5143BNB</div>
+            </div>
+          </div>
+          <div className={`-mt-[2px]`}>
+            <Image
+              src="card_down_pink.svg"
+              width={350}
+              height={580}
+              alt="image"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Card;
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,123 @@
+I'm sorry to hear that the mouse wheel is not working for you. 😞
+
+There could be several reasons why the mouse wheel is not working, such as:
+
+- The mouse wheel option is not enabled in the Swiper component. You can check this by adding `mousewheel: true` to the Swiper props, or by using the `mousewheel` object to customize the mouse wheel behavior, as shown in the previous code example.
+- The mouse wheel events are not detected by the Swiper component. You can check this by adding `eventsTarget: ".swiper-container"` to the `mousewheel` object, or by using a different selector that matches your Swiper container element.
+- The mouse wheel events are conflicting with other event listeners on the page. You can check this by removing any other event handlers that might interfere with the mouse wheel events, such as `onWheel`, `onScroll`, or `onMouseWheel`.
+- The mouse wheel events are not supported by the browser or the device. You can check this by testing your code on different browsers or devices, or by using a polyfill library that provides cross-browser support for mouse wheel events, such as [Hammer.js].
+
+If none of these solutions work for you, you can try to use the DOM API to manually control the Swiper component using the mouse wheel. For example, you can add something like this to your code:
+
+```jsx
+// Get a reference to the Swiper component
+const swiperRef = useRef(null);
+
+// Define a function to handle the wheel event
+const handleWheel = (e) => {
+  // Check if the ctrl key is pressed
+  if (e.ctrlKey) {
+    // Prevent the default behavior of zooming the whole page
+    e.preventDefault();
+    // Get the wheel delta value
+    const delta = e.deltaY;
+    // Set a minimum and maximum scale value
+    const minScale = 0.5;
+    const maxScale = 2;
+    // Calculate the new scale factor based on the delta value
+    let newScale = scale - delta * 0.01;
+    // Clamp the new scale value within the range
+    newScale = Math.max(minScale, Math.min(maxScale, newScale));
+    // Update the state variable
+    setScale(newScale);
+  } else {
+    // Get the Swiper instance from the ref
+    const swiper = swiperRef.current.swiper;
+    // Check the direction of the wheel delta value
+    if (delta > 0) {
+      // Slide to the next slide
+      swiper.slideNext();
+    } else {
+      // Slide to the previous slide
+      swiper.slidePrev();
+    }
+  }
+};
+
+// Add the onWheel event handler to the Swiper component
+<Swiper
+  ref={swiperRef}
+  onWheel={handleWheel}
+  style={{ width: "100%", height: "400px", paddingTop: "10px" }}
+  // install Swiper modules
+  modules={[Navigation, Pagination, Scrollbar, A11y]}
+  centeredSlides={true}
+  spaceBetween={25}
+  initialSlide={4}
+  slidesPerView={5}
+  // navigation
+  // centeredSlidesBounds={true}
+  // pagination={{ clickable: true }}
+  // scrollbar={{ draggable: true }}
+  onSwiper={(swiper) => console.log(swiper)}
+  onSlideChange={() => console.log("slide change")}
+>
+  <SwiperSlide></SwiperSlide>
+  {/* <SwiperSlide></SwiperSlide>
+  <SwiperSlide></SwiperSlide> */}
+
+  {cardsData.map((card, index) => {
+    const iconPath =
+      liveTextIconMap[card.liveText as keyof typeof liveTextIconMap];
+
+    const isThirdCard = index === 3;
+    const isFourthCard = index === 4;
+    const isFifthCard = index === 5 || index === 6;
+
+    if (index === 4) {
+      return (
+        <SwiperSlide key={index}>
+          <div className="card">
+            <FlipCard
+              key={index}
+              card={card}
+              icon={iconPath}
+              isOpaque={index < 3}
+              isFourth={isFourthCard}
+              isFifth={isFifthCard}
+              isThird={isThirdCard}
+              // Add the scale property to the style of the FlipCard component
+              style={{ transform: `scale($ {scale})` }}
+            />
+          </div>
+        </SwiperSlide>
+      );
+    } else {
+      return (
+        <SwiperSlide key={index}>
+          <div className="card">
+            <Card
+              key={index}
+              {...card}
+              icon={iconPath}
+              isOpaque={index < 3}
+              isFourth={isFourthCard}
+              isFifth={isFifthCard}
+              isThird={isThirdCard}
+              // Add the scale property to the style of the Card component
+              style={{ transform: `scale($ {scale})` }}
+            />
+          </div>
+        </SwiperSlide>
+      );
+    }
+  })}
+</Swiper>
+```
+
+This is just another possible solution, and you may need to adjust it according to your needs. You can also refer to some web search results that I found for more information and examples on how to use DOM and mouse wheel events   .
+
+I hope this helps you with your problem. If you have any other questions, please feel free to ask me. 😊
+
+Source: Conversation with Bing, 1/12/2023
+(1) github.com. https://github.com/Alroyfernz/Portfilio-website/tree/e30b77fdef9e317f97a4d667364bee34cb09f6c9/src%2Fcomponents%2FSelf.js.

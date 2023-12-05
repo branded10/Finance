@@ -1,0 +1,160 @@
+https://react-id-swiper.ashernguyen.site/example/centered-slides
+
+
+
+CUSTOM Slider /-***********************-*---------------------********************** */
+
+////////// 1 /////////////////////////////
+
+Sure, I can help you with that. Here's a basic example of how you can implement a swipe feature using plain JavaScript. This example will allow you to swipe with the mouse as well as with the mouse scroll.
+
+```javascript
+let startX;
+let scrollLeft;
+let isDown = false;
+const slider = document.querySelector('.items');
+
+slider.addEventListener('mousedown', (e) => {
+  isDown = true;
+  slider.classList.add('active');
+  startX = e.pageX - slider.offsetLeft;
+  scrollLeft = slider.scrollLeft;
+});
+
+slider.addEventListener('mouseleave', () => {
+  isDown = false;
+  slider.classList.remove('active');
+});
+
+slider.addEventListener('mouseup', () => {
+  isDown = false;
+  slider.classList.remove('active');
+});
+
+slider.addEventListener('mousemove', (e) => {
+  if(!isDown) return;
+  e.preventDefault();
+  const x = e.pageX - slider.offsetLeft;
+  const walk = (x - startX) * 3; //scroll-fast
+  slider.scrollLeft = scrollLeft - walk;
+});
+
+// Mouse scroll event
+slider.addEventListener('wheel', function(e) {
+  e.preventDefault();
+  slider.scrollLeft += e.deltaY;
+});
+```
+
+In this code, we're adding several event listeners to the slider:
+- `mousedown`: This event fires when the mouse button is pressed down. We record the initial X position and the scroll position.
+- `mouseleave` and `mouseup`: These events fire when the mouse button is released or leaves the slider. We use these to stop the swiping action.
+- `mousemove`: This event fires when the mouse moves. If the mouse is down, we calculate the new scroll position and update it.
+- `wheel`: This event fires when the mouse wheel is scrolled. We use it to scroll the slider.
+
+Please replace '.items' with your own class or id. Also, don't forget to style your slider and its items with CSS. For example, you might want to set `overflow-x: scroll` and `white-space: nowrap` on the slider, and `display: inline-block` on the items.
+
+Remember, this is a basic example and might not cover all edge cases. You might need to adjust it according to your needs. If you're developing a large application, consider using or creating a library to handle touch gestures in a more robust way. Good luck with your project! 😊
+
+
+///////// 2  ///////////////////////////////////
+
+First, let’s create a new component called CustomSwiper. This component will render its children inside a div that we’ll attach the swipe events to.
+
+import React, { useRef, useState } from 'react';
+
+const CustomSwiper = ({ children }) => {
+  const sliderRef = useRef();
+  const [isDown, setIsDown] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
+
+  const handleMouseDown = (e) => {
+    setIsDown(true);
+    setStartX(e.pageX - sliderRef.current.offsetLeft);
+    setScrollLeft(sliderRef.current.scrollLeft);
+  };
+
+  const handleMouseLeave = () => {
+    setIsDown(false);
+  };
+
+  const handleMouseUp = () => {
+    setIsDown(false);
+  };
+
+  const handleMouseMove = (e) => {
+    if (!isDown) return;
+    e.preventDefault();
+    const x = e.pageX - sliderRef.current.offsetLeft;
+    const walk = (x - startX) * 3; // scroll-fast
+    sliderRef.current.scrollLeft = scrollLeft - walk;
+  };
+
+  const handleWheel = (e) => {
+    e.preventDefault();
+    sliderRef.current.scrollLeft += e.deltaY;
+  };
+
+  return (
+    <div
+      ref={sliderRef}
+      onMouseDown={handleMouseDown}
+      onMouseLeave={handleMouseLeave}
+      onMouseUp={handleMouseUp}
+      onMouseMove={handleMouseMove}
+      onWheel={handleWheel}
+    >
+      {children}
+    </div>
+  );
+};
+
+export default CustomSwiper;
+
+
+<CustomSwiper>
+  <SwiperSlide></SwiperSlide>
+  <SwiperSlide></SwiperSlide>
+  {/* ... */}
+</CustomSwiper>
+
+
+
+/////////////////// 3 //////////////////////////////////////
+
+I apologize for the confusion. The `<SwiperSlide>` component is part of the `react-swiper` library, which you mentioned you don't want to use. 
+
+Instead, you can create your own custom "slide" component. Here's a simple example of how you can do this:
+
+```jsx
+const Slide = ({ children }) => (
+  <div style={{ display: 'inline-block', width: '200px', height: '100px', margin: '10px' }}>
+    {children}
+  </div>
+);
+```
+
+You can use this `Slide` component in your app like this:
+
+```jsx
+<CustomSwiper>
+  <Slide>Slide 1</Slide>
+  <Slide>Slide 2</Slide>
+  {/* ... */}
+</CustomSwiper>
+```
+
+Each `Slide` will be an individual item that you can swipe through. You can customize the `Slide` component according to your needs, for example by adjusting the width, height, and margin, or adding more complex content.
+
+Remember, this is a basic example and might not cover all edge cases. You might need to adjust it according to your needs. If you're developing a large application, consider using or creating a library to handle touch gestures in a more robust way. Good luck with your project! 
+
+
+
+
+
+//////////* ************************ **********////////////////
+
+ The CustomSwiper and Slide components I provided will create a slider that you can scroll through using the mouse wheel or by clicking and dragging with the mouse. The mousedown, mousemove, and mouseup events handle the click-and-drag functionality, while the wheel event handles the mouse scroll functionality.
+
+Remember, this is a basic example and might not cover all edge cases. You might need to adjust it according to your needs. If you’re developing a large application, consider using or creating a library to handle touch gestures in a more robust way. 

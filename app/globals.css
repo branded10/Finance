@@ -1,0 +1,235 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=Quicksand&display=swap");
+
+/* :root {
+  
+  overflow: scroll;
+
+} */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  /* font-family: "Poppins", sans-serif; */
+  scroll-behavior: smooth;
+  /* color-scheme: dark; */
+}
+
+:root,
+html,
+body {
+  /* background-color: #f9fafb; */
+  background-color: #f1f5f9;
+  width: 100%;
+  height: 100%;
+  margin: 0px;
+}
+/* #e9e6ef */
+.custom_shadow {
+  box-shadow: 0px 3px black;
+}
+
+.underline_dotted {
+  text-decoration-line: underline;
+  text-decoration-style: dotted;
+  text-underline-offset: 5px;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.login_font {
+  font-family: "Poppins", sans-serif;
+}
+
+/* .flip-horizontal {
+  --transform-scale-x: -1;
+} */
+
+/* ============ CARD.tsx ====================================================================== */
+
+
+/* .container {
+  display: flex;
+  justify-content: center;
+
+  margin: auto;
+} */
+
+.swiper-scrollbar {
+  width: 100%;
+  height: 16px;
+  background: #e0e0e0;
+}
+
+.swiper-scrollbar-drag {
+  height: 16px;
+  background: #191b1ec1;
+  border-radius: 8px;
+}
+
+.flip-card {
+  perspective: 100000px;
+  width: 200px;
+  height: 300px;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.7s ease-in-out;
+
+  transform-origin: center;
+}
+
+.flip-card.flipped {
+  transform: rotateY(180deg);
+}
+
+.flip-card-inner {
+  width: 100%;
+  height: 100%;
+  /* transition: transform 2.8s; */
+  transform-style: preserve-3d;
+}
+
+.flip-card-front,
+.flip-card-back {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  backface-visibility: hidden;
+}
+
+.flip-card-front {
+  /* background-color: #d7fbda; */
+  color: green;
+  z-index: 2;
+}
+
+.flip-card-back {
+  /* background-color: #fbd7f8; */
+  /* color: blue; */
+  transform: rotateY(-180deg);
+  z-index: 1;
+}
+
+/* .card-content {
+  padding: 20px;
+  text-align: center;
+} */
+
+.flip-button {
+  width: 100px;
+  padding: 10px;
+  font-size: 16px;
+  margin-top: 10px;
+  background-color: #f5d9fa;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* .swiper-wrapper {
+  justify-content: center;
+  margin-left: 1000px;
+} */
+
+@media (max-width: 640px) {
+  .swiper-wrapper {
+    justify-content: center;
+    /* margin-left: 0; */
+  }
+}
+
+@media (min-width: 641px) {
+  .swiper-wrapper {
+    justify-content: center;
+    /* margin-left: 1000px; */
+  }
+}
+
+/* .last-slide.swiper-slide-active {
+  transform: translate3d(0, 0, 0) !important;
+} */
+
+/* ============ CARD.tsx ====================================================================== */
+
+/* ============ UTILS ====================================================================== */
+
+/* .text_up_card_style {
+  fill: #31d0aa;
+  font-family: "Roboto", sans-serif;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.prices_up_card {
+  fill: #7b6ba7;
+  font-family: "Roboto", sans-serif;
+  font-weight: 800;
+  font-size: 12px;
+}
+
+.payout_up_card {
+  fill: #7b6ba7;
+  font-family: "Roboto", sans-serif;
+  font-size: 13px;
+  font-weight: 200;
+} */
+
+/* ------------------ DOWN CARD --------------------------------------------- */
+
+/* .text_down_card_style {
+  fill: white;
+  font-family: "Roboto", sans-serif;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.prices_down_card {
+  fill: white;
+  font-family: "Roboto", sans-serif;
+  font-weight: 800;
+  font-size: 12px;
+}
+
+.payout_down_card {
+  fill: white;
+  font-family: "Roboto", sans-serif;
+  font-size: 13px;
+  font-weight: 200;
+} */
+
+/* ============ ****UTILS**** ====================================================================== */
+
+/* ============ ****WALLET**** ====================================================================== */
+
+.wallet_font {
+  font-family: "Rubik", sans-serif;
+}
+
+/* ============ ****WALLET**** ====================================================================== */
+
+input.placeholder-gray::placeholder {
+  color: rgba(128, 128, 128, 0.486) !important ;
+}
+
+[type='radio']:checked {
+  background-image: none !important;
+  box-shadow: none !important;
+}
+
+[type='radio']:focus {
+  outline: none !important;
+}
+

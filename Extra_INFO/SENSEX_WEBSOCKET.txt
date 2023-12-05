@@ -1,0 +1,156 @@
+//NOTE: -> Python implementation ---> https://github.com/upstox/upstox-python/tree/master/examples/websocket
+//-------------> https://github.com/upstox/upstox-python/blob/master/examples/websocket/market_data/websocket_client.py
+
+//NOTE: -> NodeJS implementation ---> https://github.com/upstox/upstox-nodejs/tree/master/examples/websocket/market_data 
+// --------------> https://github.com/upstox/upstox-nodejs/blob/master/examples/websocket/market_data/websocket_client.js
+
+// Import the upstox-js-sdk module
+import Upstox from "upstox-js-sdk";
+
+// Import the ws module
+import WebSocket from "ws";
+
+// Import the protobufjs module
+import protobuf from "protobufjs";
+
+// Import the React and Next.js modules
+import React from "react";
+import { useRouter } from "next/router";
+
+// Create a config object with the API key, secret, and access token
+const config = {
+  api_key: "68791750-e95d-4e3e-dsfsdfsdf8a848566-ffdbc1cb9ed1", // Your API key
+  secret: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", // Your secret
+  access_token: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" // Your access token
+};
+
+// Create a new Upstox object with the config object
+const upstox = new Upstox(config);
+
+// Create a React component that displays the live sensex data
+function SensexData() {
+  // Use the useRouter hook to get the router object
+  const router = useRouter();
+
+  // Use the useState hook to create a state variable for the market data
+  const [marketData, setMarketData] = React.useState(null);
+
+  // Use the useEffect hook to create a websocket client and connect to the Upstox websocket server
+  React.useEffect(() => {
+    // Create a websocket client and connect to the Upstox websocket server
+    const ws = upstox.connectSocket();
+
+    // Add the access token and API key as headers
+    ws.on("open", function () {
+      ws.send(
+        JSON.stringify({
+          type: "auth",
+          data: {
+            access_token: config.access_token,
+            api_key: config.api_key,
+          },
+        })
+      );
+    });
+
+    // Handle the authentication response
+    ws.on("message", function (message) {
+      message = JSON.parse(message);
+      if (message.type === "auth") {
+        if (message.data.success) {
+          console.log("Authentication successful");
+          // Subscribe to the live market data for the sensex index
+          ws.send(
+            JSON.stringify({
+              type: "subscribe",
+              data: {
+                instruments: [
+                  {
+                    instrument_key: 26000, // The instrument key of the sensex index
+                    exchange: "NSE_INDEX", // The exchange of the sensex index
+                  },
+                ],
+              },
+            })
+          );
+        } else {
+          console.log("Authentication failed");
+        }
+      }
+    });
+
+    // Handle the subscription response
+    ws.on("message", function (message) {
+      message = JSON.parse(message);
+      if (message.type === "subscribe") {
+        if (message.data.success) {
+          console.log("Subscription successful");
+          // Start receiving live market data for the sensex index
+        } else {
+          console.log("Subscription failed");
+        }
+      }
+    });
+
+    // Handle the live market data
+    ws.on("message", function (message) {
+      message = JSON.parse(message);
+      if (message.type === "market_data") {
+        // Decode the protobuf data to a JSON format
+        const marketData = upstox.decodeProtobuf(message.data);
+        // Update the state variable with the live sensex data
+        setMarketData(marketData);
+      }
+    });
+
+    // Handle the errors
+    ws.on("error", function (error) {
+      console.log(error);
+    });
+
+    // Return a cleanup function to close the websocket connection when the component unmounts
+    return () => {
+      ws.close();
+    };
+  }, []);
+
+  // Return the JSX element that displays the live sensex data
+  return (
+    <div>
+      <h1>Live Sensex Data</h1>
+      {marketData ? (
+        <table>
+          <thead>
+            <tr>
+              <th>Last Traded Price</th>
+              <th>Open</th>
+              <th>High</th>
+              <th>Low</th>
+              <th>Close</th>
+              <th>Volume</th>
+              <th>Bid Price</th>
+              <th>Ask Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{marketData.last_traded_price}</td>
+              <td>{marketData.open}</td>
+              <td>{marketData.high}</td>
+              <td>{marketData.low}</td>
+              <td>{marketData.close}</td>
+              <td>{marketData.volume}</td>
+              <td>{marketData.bid_price}</td>
+              <td>{marketData.ask_price}</td>
+            </tr>
+          </tbody>
+        </table>
+      ) : (
+        <p>Loading...</p>
+      )}
+    </div>
+  );
+}
+
+// Export the React component as the default export
+export default SensexData;

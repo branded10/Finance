@@ -1,0 +1,64 @@
+https://stackoverflow.com/questions/76753715/suddenly-this-python-program-is-not-able-to-fetch-data-from-bseindia-api-any-wa
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------
+
+The API url changed, also the server need in HTTP header Referer:
+
+import requests
+import pandas as pd
+
+pdate = "20230721"  # starting date
+date = "20230724"  # till this date
+url = "https://api.bseindia.com/BseIndiaAPI/api/AnnSubCategoryGetData/w"
+
+headers = {
+    "User-Agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/115.0",
+    "Referer": "https://www.bseindia.com/",
+}
+
+payload = {
+    "pageno": 1,
+    "strCat": "-1",
+    "strPrevDate": pdate,
+    "strScrip": "",
+    "strSearch": "P",
+    "strToDate": pdate,
+    "strType": "C",
+    "subcategory": "",
+}
+
+data = []
+should_fetch_next_page = True
+while should_fetch_next_page:
+    print(f"Fetching page {payload['pageno']} ...")
+    jsonData = requests.get(url, headers=headers, params=payload).json()
+    if jsonData["Table"]:
+        data.extend(jsonData["Table"])
+        payload["pageno"] += 1
+        # every thing we want to do
+
+    else:
+        should_fetch_next_page = False
+
+df = pd.DataFrame(data)
+print(df)
+
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=
+OUTPUT--->>>>
+
+Prints:
+
+Fetching page 1 ...
+Fetching page 2 ...
+Fetching page 3 ...
+
+...
+
+
+------------------------------------------------------------------------------------------------
+
+NOTE: To debug the future problems, the base URL for this API request is https://www.bseindia.com/corporates/ann.html. So open the URL in your browser and open Web Developer Tools -> Network tab and reload the page.
+
+You should see the API url there + the required parameters/HTTP headers/cookies/etc...
